@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Permission {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+enum Tag {
+  FOOD
+  ELECTRONICS
+  TRAVEL
+  SEXUAL
+  OTHER
+  SPECIAL
+  BIRTHDAY
+  CHRISTMAS
+  VALENTINES
+}
+
+enum StatusWatch {
+  WATCHING
+  COMPLETED
+  ONHOLD
+  DROPPED
+  PLANTOWATCH
+}
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  name     String
+  password String
+
+  role       Permission  @default(USER)
+  coupons    Coupon[]
+  animesList AnimeList[]
+  seriesList SerieList[]
+  moviesList MovieList[]
+  wishList   WishList[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Coupon {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+  redeemed    Boolean @default(false)
+  tag         Tag
+
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("coupons")
+}
+
+model AnimeList {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+  status      StatusWatch
+
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("animes_list")
+}
+
+model SerieList {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+  status      StatusWatch
+
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("series_list")
+}
+
+model MovieList {
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  status      StatusWatch
+
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("movies_list")
+}
+
+model WishList {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+  link        String?
+  status      Boolean @default(true)
+  tag         Tag
+
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("wish_list")
+}
+
+model WhishlistWedding {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+  price       Float
+  link        String?
+  status      Boolean @default(true)
+  buyerId     String?
+  image       String?
+
+  buyer Buyer? @relation(fields: [buyerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("wish_list_wedding")
+}
+
+model Buyer {
+  id String @id @default(uuid())
+
+  name    String
+  email   String
+  product WhishlistWedding[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("buyers")
+}
