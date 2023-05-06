@@ -1,27 +1,37 @@
 {
   "name": "api-couple-of-tea",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "api",
+  "author": "Larissa Ramos",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18",
+    "prisma": "^4",
+    "npm": ">=7.x"
+  },
   "scripts": {
     "build": "nest build",
+    "prebuild": "rimraf dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "start:prod": "node dist/main",
     "dev": "nest start --watch",
     "db": "prisma db push --preview-feature",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "studio": "prisma studio",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:save": "npx prisma migrate save --experimental",
+    "prisma:up": "npx prisma migrate up --experimental",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio --experimental"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
