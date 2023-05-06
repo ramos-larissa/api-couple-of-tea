@@ -7,17 +7,24 @@ import { Tag } from '@prisma/client';
 @Injectable()
 export class CouponsService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createCouponDto: CreateCouponDto, userId: string) {
+  async create(createCouponDto: CreateCouponDto) {
     return this.prisma.coupon.create({
       data: {
         ...createCouponDto,
-        userId,
+        expiresAt: new Date(createCouponDto.expiresAt),
       },
     });
   }
 
   async findAll() {
     return this.prisma.coupon.findMany();
+  }
+
+  async use(id: string) {
+    return await this.prisma.coupon.update({
+      where: { id },
+      data: { redeemed: true },
+    });
   }
 
   async findOne(id: string) {

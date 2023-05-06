@@ -17,13 +17,18 @@ export class CouponsController {
   constructor(private readonly couponsService: CouponsService) {}
 
   @Post('create')
-  create(@Body() createCouponDto: CreateCouponDto, @Param() userId: string) {
-    return this.couponsService.create(createCouponDto, userId);
+  create(@Body() createCouponDto: CreateCouponDto) {
+    return this.couponsService.create(createCouponDto);
   }
 
   @Get()
   findAll() {
     return this.couponsService.findAll();
+  }
+
+  @Get('use/:id')
+  use(@Param('id') id: string) {
+    return this.couponsService.use(id);
   }
 
   @Get(':id')
