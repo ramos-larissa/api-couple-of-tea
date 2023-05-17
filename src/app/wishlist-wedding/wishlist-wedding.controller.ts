@@ -1,14 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WishlistWeddingService } from './wishlist-wedding.service';
 import { CreateWishlistWeddingDto } from './dto/create-wishlist-wedding.dto';
 import { UpdateWishlistWeddingDto } from './dto/update-wishlist-wedding.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { Public } from '../../middlewares/auth/public.decorator';
 
-@Controller('wishlist-wedding')
+@Public()
+@ApiTags('wishlist-wedding')
+@Controller('wishlistwedding')
 export class WishlistWeddingController {
-  constructor(private readonly wishlistWeddingService: WishlistWeddingService) {}
+  constructor(
+    private readonly wishlistWeddingService: WishlistWeddingService,
+  ) {}
 
-  @Post()
+  @Post('/create')
   create(@Body() createWishlistWeddingDto: CreateWishlistWeddingDto) {
+    console.log('bate aqui');
     return this.wishlistWeddingService.create(createWishlistWeddingDto);
   }
 
@@ -19,16 +34,19 @@ export class WishlistWeddingController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.wishlistWeddingService.findOne(+id);
+    return this.wishlistWeddingService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWishlistWeddingDto: UpdateWishlistWeddingDto) {
-    return this.wishlistWeddingService.update(+id, updateWishlistWeddingDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateWishlistWeddingDto: UpdateWishlistWeddingDto,
+  ) {
+    return this.wishlistWeddingService.update(id, updateWishlistWeddingDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.wishlistWeddingService.remove(+id);
+    return this.wishlistWeddingService.remove(id);
   }
 }

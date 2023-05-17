@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWishlistWeddingDto } from './dto/create-wishlist-wedding.dto';
 import { UpdateWishlistWeddingDto } from './dto/update-wishlist-wedding.dto';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class WishlistWeddingService {
-  create(createWishlistWeddingDto: CreateWishlistWeddingDto) {
-    return 'This action adds a new wishlistWedding';
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createWishlistWeddingDto: CreateWishlistWeddingDto) {
+    const data = {
+      ...createWishlistWeddingDto,
+    };
+    return this.prisma.whishlistWedding.create({ data });
   }
 
-  findAll() {
-    return `This action returns all wishlistWedding`;
+  async findAll() {
+    return this.prisma.whishlistWedding.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wishlistWedding`;
+  async findOne(id: string) {
+    return this.prisma.whishlistWedding.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateWishlistWeddingDto: UpdateWishlistWeddingDto) {
-    return `This action updates a #${id} wishlistWedding`;
+  async update(id: string, updateWishlistWeddingDto: UpdateWishlistWeddingDto) {
+    return this.prisma.whishlistWedding.update({
+      where: { id },
+      data: updateWishlistWeddingDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} wishlistWedding`;
+  async remove(id: string) {
+    return this.prisma.whishlistWedding.delete({
+      where: { id },
+    });
   }
 }

@@ -44,7 +44,7 @@ async function bootstrap() {
     console.log(`Server running on port ${port}...`);
   });
 
-  (async () => {
+  await (async () => {
     try {
       await prisma.$connect();
       console.log('Connected to database.');

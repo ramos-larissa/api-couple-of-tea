@@ -10,9 +10,16 @@ import { AuthModule } from './middlewares/auth/auth.module';
 
 import { UsersModule } from './app/users/users.module';
 import { CouponsModule } from './app/coupons/coupons.module';
+import { WishlistWeddingModule } from './app/wishlist-wedding/wishlist-wedding.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, AuthModule, CouponsModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    AuthModule,
+    CouponsModule,
+    WishlistWeddingModule,
+  ],
   controllers: [AuthController, AppController],
   providers: [
     {

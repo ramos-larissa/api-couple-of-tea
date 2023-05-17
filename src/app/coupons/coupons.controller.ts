@@ -31,6 +31,11 @@ export class CouponsController {
     return this.couponsService.use(id);
   }
 
+  @Get('redeemed')
+  redeemed() {
+    return this.couponsService.redeemed();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.couponsService.findOne(id);

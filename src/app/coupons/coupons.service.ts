@@ -27,6 +27,21 @@ export class CouponsService {
     });
   }
 
+  async redeemed() {
+    const redeemed = await this.prisma.coupon.findMany({
+      where: { redeemed: true },
+    });
+
+    redeemed.forEach(async (coupon) => {
+      await this.prisma.coupon.update({
+        where: { id: coupon.id },
+        data: { redeemed: false },
+      });
+    });
+
+    return redeemed;
+  }
+
   async findOne(id: string) {
     return await this.prisma.coupon.findUnique({
       where: { id },
