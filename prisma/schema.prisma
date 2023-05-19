@@ -141,12 +141,15 @@ model WishList {
 model WhishlistWedding {
   id String @id @default(uuid())
 
-  name        String
-  description String
+  nameNOK        String
+  nameBRL        String
+  descriptionNOK String
+  descriptionBRL String
   priceNOK    Float
   priceBRL    Float
   link        String?
   status      Boolean @default(true)
+  quantity    Int
   image       String?
 
   buyerId String?
