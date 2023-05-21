@@ -1,23 +1,27 @@
-import {
-  IsBoolean,
-  IsCurrency,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { WishlistWedding } from '../entities/wishlist-wedding.entity';
+import { Prisma } from '.prisma/client';
 
-export class CreateWishlistWeddingDto {
+export class CreateWishlistWeddingDto implements WishlistWedding {
   @IsOptional()
   @IsString()
   id?: string;
 
   @IsString()
   @IsNotEmpty()
-  name: string;
+  nameNOK: string;
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  descriptionNOK: string;
+
+  @IsString()
+  @IsNotEmpty()
+  nameBRL: string;
+
+  @IsString()
+  @IsNotEmpty()
+  descriptionBRL: string;
 
   @IsNotEmpty()
   priceNOK: number;
@@ -25,11 +29,15 @@ export class CreateWishlistWeddingDto {
   @IsNotEmpty()
   priceBRL: number;
 
+  @IsNotEmpty()
+  @IsInt()
+  quantity: number;
+
   @IsOptional()
   @IsString()
   link?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   status: boolean;
 
@@ -38,7 +46,7 @@ export class CreateWishlistWeddingDto {
   image?: string;
 
   @IsOptional()
-  buyer?: any;
+  buyer?: Prisma.JsonArray;
 
   @IsOptional()
   createdAt?: Date | string;

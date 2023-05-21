@@ -24,6 +24,21 @@ export class WishlistWeddingService {
   }
 
   async update(id: string, updateWishlistWeddingDto: UpdateWishlistWeddingDto) {
+    const { buyer, quantity } = updateWishlistWeddingDto;
+    if (buyer.length === quantity) {
+      updateWishlistWeddingDto.status = true;
+      return this.prisma.whishlistWedding.update({
+        where: { id },
+        data: {
+          status: true,
+        },
+      });
+    }
+
+    if (updateWishlistWeddingDto.status === true) {
+      throw new Error('Is not possible to update a product with status true');
+    }
+
     return this.prisma.whishlistWedding.update({
       where: { id },
       data: updateWishlistWeddingDto,

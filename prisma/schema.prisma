@@ -145,31 +145,17 @@ model WhishlistWedding {
   nameBRL        String
   descriptionNOK String
   descriptionBRL String
-  priceNOK    Float
-  priceBRL    Float
-  link        String?
-  status      Boolean @default(true)
-  quantity    Int
-  image       String?
+  priceNOK       Float
+  priceBRL       Float
+  link           String?
+  status         Boolean @default(true)
+  quantity       Int
+  image          String?
 
-  buyerId String?
-  buyer   Buyer?  @relation(fields: [buyerId], references: [id])
+  buyer Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("wish_list_wedding")
-}
-
-model Buyer {
-  id String @id @default(uuid())
-
-  name    String
-  email   String
-  product WhishlistWedding[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("buyers")
 }
